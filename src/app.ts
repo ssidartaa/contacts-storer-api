@@ -6,7 +6,7 @@ import express from "express";
 
 import { appRoutes } from "./routes";
 
-import handleErrorMiddleware from "./middlewares/handleError.middleware";
+import { handleErrorMiddleware } from "./middlewares";
 
 const app = express();
 

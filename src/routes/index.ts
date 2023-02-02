@@ -1,3 +1,8 @@
-import { Express } from "express";
+import { Express, Router } from "express";
+import clientsRoutes from "./clients.routes";
 
-export const appRoutes = (app: Express) => {};
+const router = Router();
+
+export const appRoutes = (app: Express) => {
+  app.use("/clients", clientsRoutes(router));
+};

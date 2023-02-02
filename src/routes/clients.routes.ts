@@ -7,13 +7,29 @@ import {
   updateClientController,
 } from "../controllers/clients.controllers";
 
-import { ensureClientExists } from "../middlewares";
+import {
+  ensureAuthClient,
+  ensureClientExists,
+  ensureOwnerClient,
+} from "../middlewares";
 
 const clientsRoutes = (router: Router) => {
   router.post("", createClientController);
-  router.post("", listClientsController);
-  router.post("/:id", ensureClientExists, updateClientController);
-  router.post("/:id", ensureClientExists, DeleteClientController);
+  router.get("", listClientsController);
+  router.patch(
+    "/:id",
+    ensureAuthClient,
+    ensureOwnerClient,
+    ensureClientExists,
+    updateClientController
+  );
+  router.delete(
+    "/:id",
+    ensureAuthClient,
+    ensureOwnerClient,
+    ensureClientExists,
+    DeleteClientController
+  );
 
   return router;
 };

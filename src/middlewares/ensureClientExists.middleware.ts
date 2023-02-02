@@ -13,9 +13,7 @@ const ensureClientExists = async (
 
   const Client = await clientRepository.findOneBy({ id });
 
-  if (!Client) {
-    throw new AppError("Client not found", 404);
-  }
+  if (!Client) throw new AppError("Client not found", 404);
 
   return next();
 };

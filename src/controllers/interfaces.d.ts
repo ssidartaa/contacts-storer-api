@@ -5,9 +5,6 @@ interface IClientRequest {
   phoneNumber: string;
 }
 
-interface IUpdateClientRequest {
-  fullName?: string;
-  email?: string;
-  password?: string;
-  phoneNumber?: string;
-}
+type ILoginRequest = Pick<IClientRequest, "email" | "password">;
+
+type IUpdateClientRequest = Partial<IClientRequest>;

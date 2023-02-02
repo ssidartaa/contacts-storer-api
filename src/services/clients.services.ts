@@ -3,6 +3,7 @@ import { hashSync } from "bcryptjs";
 import AppError from "../errors/appError";
 
 import { Client } from "../entities/clients.entity";
+
 import { clientRepository } from "../utils/getRepositories.utils";
 
 export const createClientService = async ({
@@ -10,7 +11,7 @@ export const createClientService = async ({
   email,
   password,
   phoneNumber,
-}: IClientRequest): Promise<[Client, number]> => {
+}: IClientRequest): Promise<Client> => {
   //   await createCategorySerializer.validate(category, {
   //     stripUnknown: true,
   //   });
@@ -19,9 +20,7 @@ export const createClientService = async ({
     email,
   });
 
-  if (client) {
-    throw new AppError(`Client ${fullName} already exists`);
-  }
+  if (client) throw new AppError(`Client ${fullName} already exists`);
 
   const hashedPassword = hashSync(password, 10);
 
@@ -32,19 +31,25 @@ export const createClientService = async ({
     phoneNumber,
   });
 
-  return [newClient, 201];
+  return newClient;
 };
 
-export const listClientsService = async (): Promise<[Client[], number]> => {
+export const listClientsService = async (): Promise<Client[]> => {
   const clients = await clientRepository.find();
 
-  return [clients, 200];
+  return clients;
+};
+
+export const retrieveClientService = async (id: string): Promise<Client> => {
+  const client = await clientRepository.findOneBy({ id });
+
+  return client!;
 };
 
 export const updateClientService = async (
   { fullName, email, password, phoneNumber }: IUpdateClientRequest,
   id: string
-): Promise<[Client, number]> => {
+): Promise<Client> => {
   //   await createCategorySerializer.validate(category, {
   //     stripUnknown: true,
   //   });
@@ -64,7 +69,7 @@ export const updateClientService = async (
     id,
   });
 
-  return [updatedClient!, 200];
+  return updatedClient!;
 };
 
 export const deleteClientService = async (id: string): Promise<number> => {

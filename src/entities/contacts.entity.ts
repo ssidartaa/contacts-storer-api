@@ -7,10 +7,10 @@ import {
   ManyToOne,
 } from "typeorm";
 
-import { Client } from "./clients.entity";
+import Client from "./clients.entity";
 
 @Entity("contacts")
-export class Contact {
+class Contact {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
@@ -32,3 +32,4 @@ export class Contact {
   @ManyToOne(() => Client)
   client: Client;
 }
+export default Contact;

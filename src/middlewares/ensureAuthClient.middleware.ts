@@ -11,9 +11,9 @@ const ensureAuthClient = (req: Request, _: Response, next: NextFunction) => {
     String(token),
     String(process.env.SECRET_KEY),
     (err: any, decoded: any) => {
-      req.client = { id: decoded.sub };
-
       if (err || !decoded) throw new AppError("Invalid Token", 401);
+
+      req.client = { id: decoded.sub };
 
       return next();
     }

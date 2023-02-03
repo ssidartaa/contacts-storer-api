@@ -9,10 +9,10 @@ import {
 
 import { Exclude } from "class-transformer";
 
-import { Contact } from "./contacts.entity";
+import Contact from "./contacts.entity";
 
 @Entity("clients")
-export class Client {
+class Client {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
@@ -38,3 +38,5 @@ export class Client {
   @OneToMany(() => Contact, (contact) => contact.client)
   contacts: Contact[];
 }
+
+export default Client;

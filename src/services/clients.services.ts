@@ -2,9 +2,11 @@ import { hashSync } from "bcryptjs";
 
 import AppError from "../errors/appError";
 
-import { Client } from "../entities/clients.entity";
+import Client from "../entities/clients.entity";
 
 import { clientRepository } from "../utils/getRepositories.utils";
+
+import { IClientRequest, IUpdateClientRequest } from "../interfaces";
 
 export const createClientService = async ({
   fullName,
@@ -12,15 +14,11 @@ export const createClientService = async ({
   password,
   phoneNumber,
 }: IClientRequest): Promise<Client> => {
-  //   await createCategorySerializer.validate(category, {
-  //     stripUnknown: true,
-  //   });
-
   const client = await clientRepository.findOneBy({
     email,
   });
 
-  if (client) throw new AppError(`Client ${fullName} already exists`);
+  if (client) throw new AppError(`Client with email: ${email} already exists`);
 
   const hashedPassword = hashSync(password, 10);
 
@@ -31,17 +29,22 @@ export const createClientService = async ({
     phoneNumber,
   });
 
-  return newClient;
+  return { ...newClient, password: undefined as any };
 };
 
 export const listClientsService = async (): Promise<Client[]> => {
-  const clients = await clientRepository.find();
+  const clients = await clientRepository.find({
+    relations: { contacts: true },
+  });
 
   return clients;
 };
 
 export const retrieveClientService = async (id: string): Promise<Client> => {
-  const client = await clientRepository.findOneBy({ id });
+  const client = await clientRepository.findOne({
+    where: { id },
+    relations: { contacts: true },
+  });
 
   return client!;
 };
@@ -50,10 +53,6 @@ export const updateClientService = async (
   { fullName, email, password, phoneNumber }: IUpdateClientRequest,
   id: string
 ): Promise<Client> => {
-  //   await createCategorySerializer.validate(category, {
-  //     stripUnknown: true,
-  //   });
-
   const client = await clientRepository.findOneBy({
     id,
   });
@@ -65,8 +64,9 @@ export const updateClientService = async (
     phoneNumber: phoneNumber ? phoneNumber : client!.phoneNumber,
   });
 
-  const updatedClient = await clientRepository.findOneBy({
-    id,
+  const updatedClient = await clientRepository.findOne({
+    where: { id },
+    relations: { contacts: true },
   });
 
   return updatedClient!;

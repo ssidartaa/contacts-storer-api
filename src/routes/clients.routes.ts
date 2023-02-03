@@ -2,34 +2,22 @@ import { Router } from "express";
 
 import {
   createClientController,
-  DeleteClientController,
+  deleteClientController,
   listClientsController,
+  retrieveClientController,
   updateClientController,
 } from "../controllers/clients.controllers";
 
-import {
-  ensureAuthClient,
-  ensureClientExists,
-  ensureOwnerClient,
-} from "../middlewares";
+import { ensureAuthClient } from "../middlewares";
 
-const clientsRoutes = (router: Router) => {
+const router = Router();
+
+const clientsRoutes = () => {
   router.post("", createClientController);
   router.get("", listClientsController);
-  router.patch(
-    "/:id",
-    ensureAuthClient,
-    ensureOwnerClient,
-    ensureClientExists,
-    updateClientController
-  );
-  router.delete(
-    "/:id",
-    ensureAuthClient,
-    ensureOwnerClient,
-    ensureClientExists,
-    DeleteClientController
-  );
+  router.get("/owner", ensureAuthClient, retrieveClientController);
+  router.patch("", ensureAuthClient, updateClientController);
+  router.delete("", ensureAuthClient, deleteClientController);
 
   return router;
 };

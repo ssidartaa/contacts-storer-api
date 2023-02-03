@@ -10,6 +10,8 @@ import {
   deleteClientService,
 } from "../services/clients.services";
 
+import { IClientRequest, IUpdateClientRequest } from "../interfaces";
+
 export const createClientController = async (req: Request, res: Response) => {
   const client: IClientRequest = req.body;
 
@@ -24,10 +26,7 @@ export const listClientsController = async (_: Request, res: Response) => {
   return res.status(200).json(instanceToPlain(clients));
 };
 
-export const retrieveClientsController = async (
-  req: Request,
-  res: Response
-) => {
+export const retrieveClientController = async (req: Request, res: Response) => {
   const { id } = req.client;
 
   const ownerClient = await retrieveClientService(id);
@@ -37,15 +36,15 @@ export const retrieveClientsController = async (
 
 export const updateClientController = async (req: Request, res: Response) => {
   const client: IUpdateClientRequest = req.body;
-  const { id } = req.params;
+  const { id } = req.client;
 
   const updatedClient = await updateClientService(client, id);
 
   return res.status(200).json(instanceToPlain(updatedClient));
 };
 
-export const DeleteClientController = async (req: Request, res: Response) => {
-  const { id } = req.params;
+export const deleteClientController = async (req: Request, res: Response) => {
+  const { id } = req.client;
 
   const status = await deleteClientService(id);
 

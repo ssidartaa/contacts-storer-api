@@ -1,11 +1,11 @@
-import { Express, Router } from "express";
+import { Express } from "express";
 
 import clientsRoutes from "./clients.routes";
+import contactsRoutes from "./contacts.routes";
 import loginRoutes from "./login.routes";
 
-const router = Router();
-
 export const appRoutes = (app: Express) => {
-  app.use("/clients", clientsRoutes(router));
-  app.use("/login", loginRoutes(router));
+  app.use("/clients", clientsRoutes());
+  app.use("/contacts", contactsRoutes());
+  app.use("/login", loginRoutes());
 };

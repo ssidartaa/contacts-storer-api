@@ -6,6 +6,8 @@ import { clientRepository } from "../utils/getRepositories.utils";
 
 import AppError from "../errors/appError";
 
+import { ILoginRequest } from "../interfaces";
+
 const loginService = async ({
   email,
   password,

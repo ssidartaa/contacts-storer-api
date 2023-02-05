@@ -6,6 +6,7 @@ import {
   createClientService,
   listClientsService,
   retrieveClientService,
+  retrievePDFClientService,
   updateClientService,
   deleteClientService,
 } from "../services/clients.services";
@@ -23,7 +24,7 @@ export const createClientController = async (req: Request, res: Response) => {
 export const listClientsController = async (_: Request, res: Response) => {
   const clients = await listClientsService();
 
-  return res.status(200).json(instanceToPlain(clients));
+  return res.json(instanceToPlain(clients));
 };
 
 export const retrieveClientController = async (req: Request, res: Response) => {
@@ -34,13 +35,26 @@ export const retrieveClientController = async (req: Request, res: Response) => {
   return res.status(200).json(instanceToPlain(ownerClient));
 };
 
+export const retrievePDFClientController = async (
+  req: Request,
+  res: Response
+) => {
+  const { id } = req.client;
+  res.setHeader("Content-Disposition", 'inline; filename="client.pdf"');
+  res.setHeader("Content-type", "application/pdf");
+
+  const newPDF = await retrievePDFClientService(id);
+
+  newPDF.pipe(res.status(201));
+};
+
 export const updateClientController = async (req: Request, res: Response) => {
   const client: IUpdateClientRequest = req.body;
   const { id } = req.client;
 
   const updatedClient = await updateClientService(client, id);
 
-  return res.status(200).json(instanceToPlain(updatedClient));
+  return res.json(instanceToPlain(updatedClient));
 };
 
 export const deleteClientController = async (req: Request, res: Response) => {

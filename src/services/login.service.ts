@@ -8,13 +8,19 @@ import AppError from "../errors/appError";
 
 import { ILoginRequest } from "../interfaces";
 
+import { loginSerializer } from "../serializers/login.serializer";
+
 const loginService = async ({
   email,
   password,
 }: ILoginRequest): Promise<string> => {
-  //   await createCategorySerializer.validate(category, {
-  //     stripUnknown: true,
-  //   });
+  await loginSerializer.validate(
+    { email, password },
+    {
+      stripUnknown: true,
+      abortEarly: true,
+    }
+  );
 
   const client = await clientRepository.findOneBy({ email: email });
 

@@ -7,20 +7,10 @@ import {
 
 import { IContactRequest, IUpdateContactRequest } from "../interfaces";
 
-import {
-  createContactSerializer,
-  updateContactSerializer,
-} from "../serializers/contacts.serializers";
-
 export const createContactService = async (
   { fullName, email, phoneNumber }: IContactRequest,
   id: string
 ): Promise<Contact> => {
-  await createContactSerializer.validate(
-    { fullName, email, phoneNumber },
-    { abortEarly: false, stripUnknown: true }
-  );
-
   const client = await clientRepository.findOneBy({ id });
 
   const newContact = await contactRepository.save({
@@ -51,11 +41,6 @@ export const updateContactService = async (
   { fullName, email, phoneNumber }: IUpdateContactRequest,
   id: string
 ): Promise<Contact> => {
-  await updateContactSerializer.validate(
-    { fullName, email, phoneNumber },
-    { abortEarly: false, stripUnknown: true }
-  );
-
   const contact = await contactRepository.findOneBy({
     id,
   });

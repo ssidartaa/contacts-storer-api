@@ -10,22 +10,12 @@ import { IClientRequest, IUpdateClientRequest } from "../interfaces";
 
 import formatDateAndHour from "../utils/formatDateAndHour";
 
-import {
-  createClientSerializer,
-  updateClientSerializer,
-} from "../serializers/clients.serializers";
-
 export const createClientService = async ({
   fullName,
   email,
   password,
   phoneNumber,
 }: IClientRequest): Promise<Client> => {
-  await createClientSerializer.validate(
-    { fullName, email, password, phoneNumber },
-    { abortEarly: false, stripUnknown: true }
-  );
-
   const client = await clientRepository.findOneBy({
     email,
   });
@@ -39,6 +29,7 @@ export const createClientService = async ({
     email,
     password: hashedPassword,
     phoneNumber,
+    contacts: [],
   });
 
   return { ...newClient, password: undefined as any };
@@ -172,11 +163,6 @@ export const updateClientService = async (
   { fullName, email, password, phoneNumber }: IUpdateClientRequest,
   id: string
 ): Promise<Client> => {
-  await updateClientSerializer.validate(
-    { fullName, email, password, phoneNumber },
-    { abortEarly: false, stripUnknown: true }
-  );
-
   const client = await clientRepository.findOneBy({
     id,
   });

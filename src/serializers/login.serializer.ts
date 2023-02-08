@@ -5,9 +5,9 @@ export const loginSerializer = yup.object().shape({
     .string()
     .typeError("This field must be a string")
     .email("This field is must be a email address")
-    .required("This field is required"),
+    .required("The field 'email' is required"),
   password: yup
     .string()
     .typeError("This field must be a string")
-    .required("This field is required"),
+    .required("The field 'password' is required"),
 });

@@ -7,17 +7,32 @@ import {
   deleteContactController,
 } from "../controllers/contacts.controllers";
 
-import { ensureAuthClient, ensureOwnerContactExists } from "../middlewares";
+import {
+  ensureAuthClient,
+  ensureOwnerContactExists,
+  ensureBodyMiddleware,
+} from "../middlewares";
+
+import {
+  createContactSerializer,
+  updateContactSerializer,
+} from "../serializers/contacts.serializers";
 
 const router = Router();
 
 const contactsRoutes = () => {
-  router.post("", ensureAuthClient, createContactController);
+  router.post(
+    "",
+    ensureAuthClient,
+    ensureBodyMiddleware(createContactSerializer),
+    createContactController
+  );
   router.get("", ensureAuthClient, listOwnerContactsController);
   router.patch(
     "/:id",
     ensureAuthClient,
     ensureOwnerContactExists,
+    ensureBodyMiddleware(updateContactSerializer),
     updateContactController
   );
   router.delete(

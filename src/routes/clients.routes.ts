@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Request, Router } from "express";
 
 import {
   createClientController,
@@ -9,16 +9,30 @@ import {
   deleteClientController,
 } from "../controllers/clients.controllers";
 
-import { ensureAuthClient } from "../middlewares";
+import { ensureAuthClient, ensureBodyMiddleware } from "../middlewares";
+
+import {
+  createClientSerializer,
+  updateClientSerializer,
+} from "../serializers/clients.serializers";
 
 const router = Router();
 
 const clientsRoutes = () => {
-  router.post("", createClientController);
+  router.post(
+    "",
+    ensureBodyMiddleware(createClientSerializer),
+    createClientController
+  );
   router.get("", listClientsController);
   router.get("/owner", ensureAuthClient, retrieveClientController);
   router.post("/pdf", ensureAuthClient, retrievePDFClientController);
-  router.patch("", ensureAuthClient, updateClientController);
+  router.patch(
+    "",
+    ensureBodyMiddleware(updateClientSerializer),
+    ensureAuthClient,
+    updateClientController
+  );
   router.delete("", ensureAuthClient, deleteClientController);
 
   return router;

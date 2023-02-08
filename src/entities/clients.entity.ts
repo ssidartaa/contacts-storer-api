@@ -35,7 +35,7 @@ class Client {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => Contact, (contact) => contact.client)
+  @OneToMany(() => Contact, (contact) => contact.client, { cascade: true })
   contacts: Contact[];
 }
 

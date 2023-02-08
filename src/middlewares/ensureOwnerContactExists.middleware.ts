@@ -4,12 +4,17 @@ import AppError from "../errors/appError";
 
 import { contactRepository } from "../utils/getRepositories.utils";
 
+import * as uuid from "uuid";
+
 const ensureOwnerContactExists = async (
   req: Request,
   _: Response,
   next: NextFunction
 ) => {
   const { id } = req.params;
+
+  if (!uuid.validate(id))
+    throw new AppError(`The param '${id}' is a invalid uuid`);
 
   const contact = await contactRepository.findOne({
     where: {

@@ -4,34 +4,24 @@ export const createContactSerializer = yup.object().shape({
   fullName: yup
     .string()
     .typeError("This field must be a string")
-    .required("This field is required"),
+    .required("The field 'fullName' is required"),
   email: yup
     .string()
     .typeError("This field must be a string")
     .email("This field is must be a email address")
-    .required("This field is required"),
+    .required("The field 'email' is required"),
   phoneNumber: yup
     .string()
     .typeError("This field must be a string")
-    .min(13, "This field must have at least 13 characters, Ex: 5512123456789")
+    .min(
+      19,
+      "This field must have at least 19 characters, Ex: +12 (12) 12345-6789"
+    )
     .max(
-      14,
-      "This field must have a maximum of 14 characters, Ex: 55123123456789"
+      20,
+      "This field must have a maximum of 20 characters, Ex: +12 (123) 12345-6789"
     )
-    .transform((number: string) =>
-      number
-        ? number.length === 14
-          ? `+${number.slice(0, 2)} (${number.slice(2, 5)}) ${number.slice(
-              5,
-              10
-            )}-${number.slice(10)}`
-          : `+${number.slice(0, 2)} (${number.slice(2, 4)}) ${number.slice(
-              4,
-              9
-            )}-${number.slice(9)}`
-        : undefined
-    )
-    .required("This field is required"),
+    .required("The field 'phoneNumber' is required"),
 });
 
 export const updateContactSerializer = yup.object().shape({
@@ -44,23 +34,13 @@ export const updateContactSerializer = yup.object().shape({
   phoneNumber: yup
     .string()
     .typeError("This field must be a string")
-    .min(13, "This field must have at least 13 characters, Ex: 5512123456789")
-    .max(
-      14,
-      "This field must have a maximum of 14 characters, Ex: 55123123456789"
+    .min(
+      19,
+      "This field must have at least 19 characters, Ex: +12 (12) 12345-6789"
     )
-    .transform((number: string) =>
-      number
-        ? number.length === 14
-          ? `+${number.slice(0, 2)} (${number.slice(2, 5)}) ${number.slice(
-              5,
-              10
-            )}-${number.slice(10)}`
-          : `+${number.slice(0, 2)} (${number.slice(2, 4)}) ${number.slice(
-              4,
-              9
-            )}-${number.slice(9)}`
-        : undefined
+    .max(
+      20,
+      "This field must have a maximum of 20 characters, Ex: +12 (123) 12345-6789"
     )
     .notRequired(),
 });

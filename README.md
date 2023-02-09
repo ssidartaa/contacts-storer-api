@@ -311,4 +311,6 @@ Projeto desenvolvido com a finalidade de armazenar contatos. <a href="">Front-En
 
 - Essa rota não contém corpo de resposta
 
+#
+
 <p align ='center'> Copyright <a href="https://github.com/ssidartaa">Sidarta Oliveira</a> 2023 </p>

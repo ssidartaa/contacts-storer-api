@@ -1,3 +1,5 @@
+import Contact from "./entities/contacts.entity";
+
 export type ILoginRequest = Pick<IClientRequest, "email" | "password">;
 
 export interface IClientRequest {
@@ -15,3 +17,7 @@ export type IContactRequest = Pick<
 >;
 
 export type IUpdateContactRequest = Partial<IContactRequest>;
+
+export interface IContactWithOnwerId extends Contact {
+  ownerId: string;
+}

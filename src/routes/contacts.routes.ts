@@ -3,6 +3,7 @@ import { Router } from "express";
 import {
   createContactController,
   listOwnerContactsController,
+  listContactByIdController,
   updateContactController,
   deleteContactController,
 } from "../controllers/contacts.controllers";
@@ -28,6 +29,12 @@ const contactsRoutes = () => {
     createContactController
   );
   router.get("", ensureAuthClient, listOwnerContactsController);
+  router.get(
+    "/:id",
+    ensureAuthClient,
+    ensureOwnerContactExists,
+    listContactByIdController
+  );
   router.patch(
     "/:id",
     ensureAuthClient,

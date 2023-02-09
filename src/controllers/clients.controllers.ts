@@ -32,7 +32,7 @@ export const retrieveClientController = async (req: Request, res: Response) => {
 
   const ownerClient = await retrieveClientService(id);
 
-  return res.status(200).json(instanceToPlain(ownerClient));
+  return res.json(instanceToPlain(ownerClient));
 };
 
 export const retrievePDFClientController = async (

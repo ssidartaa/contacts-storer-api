@@ -93,6 +93,66 @@ describe("/contacts", () => {
     expect(status).toBe(200);
   });
 
+  test("GET /contacts/:id : error - Should not be able to list client contact without authentication", async () => {
+    const { body, status } = await request(app).get(
+      `/contacts/${mockedValidUuid}`
+    );
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(401);
+  });
+
+  test("GET /contacts/:id : error - Should not be able to list a client contact with invalid uuid", async () => {
+    const { body: loginBody } = await request(app)
+      .post("/login")
+      .send(mockedClientLogin);
+
+    const { body, status } = await request(app)
+      .get(`/contacts/${mockedInvalidUuid}`)
+      .set("Authorization", `Bearer ${loginBody.token}`);
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(400);
+  });
+
+  test("GET /contacts/:id : error - Should not be able to list a client contact with invalid contact", async () => {
+    const { body: loginBody } = await request(app)
+      .post("/login")
+      .send(mockedClientLogin);
+
+    const { body, status } = await request(app)
+      .get(`/contacts/${mockedValidUuid}`)
+      .set("Authorization", `Bearer ${loginBody.token}`);
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(404);
+  });
+
+  test("GET /contacts/:id : success - Must be able to list a client contact", async () => {
+    const { body: loginBody } = await request(app)
+      .post("/login")
+      .send(mockedClientLogin);
+
+    const { body: getBody } = await request(app)
+      .get("/contacts")
+      .set("Authorization", `Bearer ${loginBody.token}`);
+
+    const { body, status } = await request(app)
+      .get(`/contacts/${getBody[0].id}`)
+      .set("Authorization", `Bearer ${loginBody.token}`);
+
+    expect(body).toHaveProperty("id");
+    expect(body).toHaveProperty("fullName");
+    expect(body).toHaveProperty("email");
+    expect(body).toHaveProperty("phoneNumber");
+    expect(body).toHaveProperty("createdAt");
+    expect(body).toHaveProperty("updatedAt");
+    expect(body.fullName).toEqual("Kenzinho Oliveira Santos");
+    expect(body.email).toEqual("kenzinho@mail.com");
+    expect(body.phoneNumber).toEqual("+12 (123) 12345-6789");
+    expect(status).toBe(200);
+  });
+
   test("PATCH /contacts/:id : error - Should not be able to update a client contact without authentication", async () => {
     const { body, status } = await request(app).patch(
       `/contacts/${mockedValidUuid}`

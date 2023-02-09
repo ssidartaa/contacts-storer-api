@@ -5,7 +5,11 @@ import {
   contactRepository,
 } from "../utils/getRepositories.utils";
 
-import { IContactRequest, IUpdateContactRequest } from "../interfaces";
+import {
+  IContactRequest,
+  IContactWithOnwerId,
+  IUpdateContactRequest,
+} from "../interfaces";
 
 export const createContactService = async (
   { fullName, email, phoneNumber }: IContactRequest,
@@ -35,6 +39,17 @@ export const listOwnerContactsService = async (
     .map((contact) => {
       return { ...contact, client: undefined as any };
     });
+};
+
+export const listContactByIdService = async (
+  id: string,
+  clientId: string
+): Promise<IContactWithOnwerId> => {
+  const contact = await contactRepository.findOne({
+    where: { id },
+  });
+
+  return { ...contact!, ownerId: clientId }!;
 };
 
 export const updateContactService = async (

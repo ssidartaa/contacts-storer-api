@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import {
   createContactService,
   listOwnerContactsService,
+  listContactByIdService,
   updateContactService,
   deleteContactService,
 } from "../services/contacts.services";
@@ -26,7 +27,18 @@ export const listOwnerContactsController = async (
 
   const ownerContacts = await listOwnerContactsService(id);
 
-  return res.status(200).json(ownerContacts);
+  return res.json(ownerContacts);
+};
+export const listContactByIdController = async (
+  req: Request,
+  res: Response
+) => {
+  const { id: clientId } = req.client;
+  const { id } = req.params;
+
+  const contact = await listContactByIdService(id, clientId);
+
+  return res.json(contact);
 };
 
 export const updateContactController = async (req: Request, res: Response) => {
@@ -35,7 +47,7 @@ export const updateContactController = async (req: Request, res: Response) => {
 
   const updatedContact = await updateContactService(contact, id);
 
-  return res.status(200).json(updatedContact);
+  return res.json(updatedContact);
 };
 
 export const deleteContactController = async (req: Request, res: Response) => {

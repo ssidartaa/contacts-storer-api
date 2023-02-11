@@ -8,6 +8,8 @@ import { appRoutes } from "./routes";
 
 import { handleErrorMiddleware } from "./middlewares";
 
+const cors = require('cors');
+
 const app = express();
 
 app.use(express.json());

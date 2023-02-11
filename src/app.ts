@@ -4,13 +4,15 @@ import "express-async-errors";
 
 import express from "express";
 
+import cors from "cors";
+
 import { appRoutes } from "./routes";
 
 import { handleErrorMiddleware } from "./middlewares";
 
-const cors = require('cors');
-
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 

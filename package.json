@@ -12,10 +12,6 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "test": "cross-env NODE_ENV=test SECRET_KEY=secret_key jest --verbose"
   },
-  "devDependencies": {
-    "ts-node-dev": "^2.0.0",
-    "@types/uuid": "^8.3.4"
-  },
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.13",
@@ -45,5 +41,9 @@
     "uuid": "^9.0.0",
     "voilab-pdf-table": "^0.5.1",
     "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "ts-node-dev": "^2.0.0",
+    "@types/uuid": "^8.3.4"
   }
 }

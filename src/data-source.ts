@@ -15,6 +15,16 @@ const AppDataSource = new DataSource(
         synchronize: true,
         entities: ["src/entities/*.ts"],
       }
+    : process.env.NODE_ENV === "production"
+    ? {
+        type: "postgres",
+        url: process.env.DATABASE_URL,
+        entities: [Client, Contact],
+        migrations: [
+          ClientsContactsEntities1675305213998,
+          UpdateCascadeClient1675880138232,
+        ],
+      }
     : {
         type: "postgres",
         host: process.env.HOST,

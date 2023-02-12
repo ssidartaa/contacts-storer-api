@@ -42,6 +42,10 @@ Projeto desenvolvido com a finalidade de armazenar contatos. <a href="https://gi
 - TS-NODE-DEV
 - YUP
 
+## URL do deploy do projeto:
+
+`https://contacts-storer-api.onrender.com`
+
 # Documentação
 
 ## Endpoints

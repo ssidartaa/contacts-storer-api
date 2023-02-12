@@ -12,6 +12,10 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "test": "cross-env NODE_ENV=test SECRET_KEY=secret_key jest --verbose"
   },
+  "devDependencies": {
+    "ts-node-dev": "^2.0.0",
+    "@types/uuid": "^8.3.4"
+  },
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.13",
@@ -20,7 +24,6 @@
     "@types/jsonwebtoken": "^8.5.9",
     "@types/pdfkit": "^0.12.8",
     "@types/supertest": "^2.0.12",
-    "@types/uuid": "^8.3.4",
     "@types/voilab-pdf-table": "^0.5.1",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
@@ -37,7 +40,6 @@
     "sqlite3": "^5.0.8",
     "supertest": "^6.2.4",
     "ts-jest": "^28.0.5",
-    "ts-node-dev": "^2.0.0",
     "typeorm": "^0.3.6",
     "typescript": "^4.7.4",
     "uuid": "^9.0.0",

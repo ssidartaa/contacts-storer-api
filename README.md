@@ -1,6 +1,6 @@
 # Sobre o projeto
 
-Projeto desenvolvido com a finalidade de armazenar contatos. <a href="">Front-End</a> do projeto.
+Projeto desenvolvido com a finalidade de armazenar contatos. <a href="https://github.com/ssidartaa/contacts-storer">Front-End</a> do projeto.
 
 ## Como instalar e rodar a aplicação
 
